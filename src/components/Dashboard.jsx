@@ -33,7 +33,7 @@ const Dashboard = ({ myPokemon,setMyPokemon }) => {
             <StDashBoardList>
                 {fixedPokemonList.map((_, idx) => {
                     const item = myPokemon && myPokemon[idx] || {};
-                    return <PokemonCard key={`dex${idx}`} item={item} setMyPokemon={setMyPokemon}/>;
+                    return <PokemonCard key={`dex${idx}`} item={item} myPokemon={myPokemon} setMyPokemon={setMyPokemon}/>;
                 })}
             </StDashBoardList>
         </StDashboard>

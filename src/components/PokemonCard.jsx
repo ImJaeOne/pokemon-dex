@@ -67,16 +67,6 @@ const PokemonCard = ({ item = {}, myPokemon, setMyPokemon }) => {
             return;
         }
         setMyPokemon((prev) => {
-            // // 얘도 2번 출력... 왜...?
-            // if (prev.some((item) => item.id === id)) {
-            //     alert('이미 등록되어 있는 포켓몬입니다.');
-            //     return prev;
-            // }
-            // // 제일 처음 7개째 등록하려 하면 alert 2번 출력
-            // if (prev.length >= 6) {
-            //     alert('최대 6마리까지 등록할 수 있습니다.');
-            //     return prev;
-            // }
             return [...prev, { ...item, isRegistered: true }];
         });
         toast.info(`${item.korean_name} 등록 완료`);
@@ -84,7 +74,7 @@ const PokemonCard = ({ item = {}, myPokemon, setMyPokemon }) => {
 
     const removePokemon = (e, id) => {
         e.stopPropagation();
-        setMyPokemon((prev) => [...prev].filter((item) => item.id !== id));
+        setMyPokemon((prev) => prev.filter((item) => item.id !== id));
         toast.info(`${item.korean_name} 삭제 완료`);
     };
 

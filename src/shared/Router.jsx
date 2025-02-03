@@ -5,22 +5,16 @@ import Dex from '../pages/Dex';
 import PokemonDetail from '../pages/PokemonDetail';
 
 const Router = () => {
-    const [myPokemon, setMyPokemon] = useState(() => {
-        return JSON.parse(localStorage.getItem('pokemon')) || [];
-    });
-
-    useEffect(() => {
-        localStorage.setItem('pokemon', JSON.stringify(myPokemon));
-    }, [myPokemon]);
+    
 
     return (
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/dex" element={<Dex myPokemon={myPokemon} setMyPokemon={setMyPokemon} />} />
+                <Route path="/dex" element={<Dex />} />
                 <Route
                     path="/pokemon-detail"
-                    element={<PokemonDetail myPokemon={myPokemon} setMyPokemon={setMyPokemon} />}
+                    element={<PokemonDetail />}
                 />
             </Routes>
         </BrowserRouter>
