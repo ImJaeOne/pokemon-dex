@@ -1,7 +1,5 @@
-import React from 'react';
 import styled from 'styled-components';
 import pokemonBall from '../assets/pokeball-13iwdk7Y.png';
-
 
 const StPokemonCard = styled.div`
     display: flex;
@@ -42,12 +40,15 @@ const StPokemonBtn = styled.button`
     border-radius: 10px;
     border: none;
     padding: 5px 10px;
+    cursor: pointer;
 `;
 
 const PokemonCard = ({ item = {} }) => {
     return (
         <StPokemonCard>
-            {Object.keys(item).length === 0 ? <StDashBoardImg src={pokemonBall}/> : (
+            {Object.keys(item).length === 0 ? (
+                <StDashBoardImg src={pokemonBall} />
+            ) : (
                 <>
                     <StPokemonImg src={item.img_url} />
                     <StPokemonName>{item.korean_name}</StPokemonName>

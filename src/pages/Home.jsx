@@ -7,6 +7,8 @@ const StHomeContainer = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    height: 100dvh;
+    
 `;
 
 const StHomeLogo = styled.img`

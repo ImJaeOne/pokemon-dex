@@ -9,11 +9,15 @@ const StDashboard = styled.div`
     padding-bottom: 20px;
     margin-bottom: 20px;
     border-radius: 10px;
-
+    padding: 20px;
     background-color: #cdcdcd;
 `;
 
-const StDashBoardTitle = styled.h1``;
+const StDashBoardTitle = styled.h1`
+    font-size: 40px;
+    margin-bottom: 10px;
+    font-weight: bolder;
+`;
 
 const StDashBoardList = styled.div`
     display: flex;
