@@ -32,7 +32,7 @@ const Dashboard = ({ myPokemon,setMyPokemon }) => {
             <StDashBoardTitle>나의 포켓몬</StDashBoardTitle>
             <StDashBoardList>
                 {fixedPokemonList.map((_, idx) => {
-                    const item = myPokemon[idx] || {};
+                    const item = myPokemon && myPokemon[idx] || {};
                     return <PokemonCard key={`dex${idx}`} item={item} setMyPokemon={setMyPokemon}/>;
                 })}
             </StDashBoardList>

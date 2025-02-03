@@ -57,7 +57,7 @@ const PokemonDetail = ({ myPokemon, setMyPokemon }) => {
 
     const navigate = useNavigate();
     const query = Number(searchParams.get('id'));
-    console.log(myPokemon);
+
     useEffect(() => {
         const correct = MOCK_DATA.find((item) => item.id === query);
         setPokemonDetail(correct);

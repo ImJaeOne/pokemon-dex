@@ -1,11 +1,18 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Home from '../pages/Home';
 import Dex from '../pages/Dex';
 import PokemonDetail from '../pages/PokemonDetail';
 
 const Router = () => {
-    const [myPokemon, setMyPokemon] = useState([]);
+    const [myPokemon, setMyPokemon] = useState(() => {
+        return JSON.parse(localStorage.getItem('pokemon')) || [];
+    });
+    console.log(myPokemon)
+
+    useEffect(() => {
+        localStorage.setItem('pokemon', JSON.stringify(myPokemon));
+    }, [myPokemon]);
 
     return (
         <BrowserRouter>
