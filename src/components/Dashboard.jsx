@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import PokemonCard from './PokemonCard';
+import pokemonLogo from'../assets/pokemon-logo-RN0wntMB.png'
 
 const StDashboard = styled.div`
     display: flex;
@@ -10,13 +11,12 @@ const StDashboard = styled.div`
     margin-bottom: 20px;
     border-radius: 10px;
     padding: 20px;
-    background-color: #cdcdcd;
+    background-color: #5268b0;
 `;
 
-const StDashBoardTitle = styled.h1`
-    font-size: 40px;
-    margin-bottom: 10px;
-    font-weight: bolder;
+const StDashBoardTitle = styled.img`
+    width: 200px;
+    margin-bottom: 20px;
 `;
 
 const StDashBoardList = styled.div`
@@ -29,7 +29,7 @@ const fixedPokemonList = Array.from({ length: 6 }, () => ({}));
 const Dashboard = ({ myPokemon,setMyPokemon }) => {
     return (
         <StDashboard>
-            <StDashBoardTitle>나의 포켓몬</StDashBoardTitle>
+            <StDashBoardTitle src={pokemonLogo}/>
             <StDashBoardList>
                 {fixedPokemonList.map((_, idx) => {
                     const item = myPokemon && myPokemon[idx] || {};
