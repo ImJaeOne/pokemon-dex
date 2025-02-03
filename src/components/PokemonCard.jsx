@@ -57,14 +57,13 @@ const PokemonCard = ({ item = {}, myPokemon, setMyPokemon }) => {
 
     const addPokemon = (e, id) => {
         e.stopPropagation();
-      
         if (myPokemon.some((item) => item.id === id)) {
             alert('이미 등록되어 있는 포켓몬입니다.');
-            return ;
+            return;
         }
         if (myPokemon.length >= 6) {
             alert('최대 6마리까지 등록할 수 있습니다.');
-            return ;
+            return;
         }
         setMyPokemon((prev) => {
             // // 얘도 2번 출력... 왜...?

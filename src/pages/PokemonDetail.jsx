@@ -10,6 +10,7 @@ const StPokemonDetailContainer = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 10px;
 `;
 
 const StPokemonImg = styled.img`
@@ -34,25 +35,43 @@ const StPokemonDesc = styled.div`
     margin-bottom: 20px;
 `;
 
+const StBtn = styled.button`
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 15px;
+    cursor: pointer;
+`;
+
 const StBackBtn = styled.button`
     border: none;
     border-radius: 10px;
     padding: 10px;
     font-size: 15px;
     cursor: pointer;
-`
+`;
 
-const PokemonDetail = () => {
+const PokemonDetail = ({ myPokemon, setMyPokemon }) => {
     const [searchParams, setSearchParams] = useSearchParams();
     const [pokemonDetail, setPokemonDetail] = useState({});
 
     const navigate = useNavigate();
     const query = Number(searchParams.get('id'));
-
+    console.log(myPokemon);
     useEffect(() => {
         const correct = MOCK_DATA.find((item) => item.id === query);
         setPokemonDetail(correct);
     }, []);
+
+    const addPokemon = () => {
+        setMyPokemon((prev) => {
+            return [...prev, { ...pokemonDetail, isRegistered: true }];
+        });
+    };
+
+    const removePokemon = () => {
+        setMyPokemon((prev) => [...prev].filter((item) => item.id !== pokemonDetail.id));
+    };
 
     const handleBack = () => {
         navigate(-1);
@@ -63,6 +82,11 @@ const PokemonDetail = () => {
             <StPokemonName>{pokemonDetail.korean_name}</StPokemonName>
             <StPokemonType>타입: {pokemonDetail.types?.join(', ')}</StPokemonType>
             <StPokemonDesc>{pokemonDetail.description}</StPokemonDesc>
+            {myPokemon.some((item) => item.id === query) ? (
+                <StBtn onClick={removePokemon}>삭제</StBtn>
+            ) : (
+                <StBtn onClick={addPokemon}>등록</StBtn>
+            )}
             <StBackBtn onClick={handleBack}>뒤로 가기</StBackBtn>
         </StPokemonDetailContainer>
     );
