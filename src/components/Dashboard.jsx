@@ -24,18 +24,16 @@ const StDashBoardList = styled.div`
     gap: 10px;
 `;
 
+const fixedPokemonList = Array.from({ length: 6 }, () => ({}));
 
-
-const Dashboard = () => {
-    const pokemonDummyList = Array.from({ length: 6 }, () => {
-        return 0;
-    });
+const Dashboard = ({ myPokemon,setMyPokemon }) => {
     return (
         <StDashboard>
             <StDashBoardTitle>나의 포켓몬</StDashBoardTitle>
             <StDashBoardList>
-                {pokemonDummyList.map((_, idx) => {
-                    return <PokemonCard key={idx}/>;
+                {fixedPokemonList.map((_, idx) => {
+                    const item = myPokemon[idx] || {};
+                    return <PokemonCard key={`dex${idx}`} item={item} setMyPokemon={setMyPokemon}/>;
                 })}
             </StDashBoardList>
         </StDashboard>

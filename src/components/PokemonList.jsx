@@ -10,11 +10,11 @@ const StPokemonList = styled.div`
     gap: 10px;
 `
 
-const PokemonList = () => {
+const PokemonList = ({setMyPokemon}) => {
     return (
         <StPokemonList>
             {MOCK_DATA.map((item) => (
-                <PokemonCard key={item.id} item={item} />
+                <PokemonCard key={item.id} item={item} setMyPokemon={setMyPokemon}/>
             ))}
         </StPokemonList>
     );

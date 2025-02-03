@@ -43,7 +43,15 @@ const StPokemonBtn = styled.button`
     cursor: pointer;
 `;
 
-const PokemonCard = ({ item = {} }) => {
+const PokemonCard = ({ item = {}, setMyPokemon }) => {
+    const addPokemon = () => {
+        setMyPokemon((prev) => [...prev, { ...item, isRegistered: true }]);
+    };
+
+    const removePokemon = (id) => {
+        setMyPokemon((prev) => [...prev].filter((item) => item.id !== id));
+    };
+
     return (
         <StPokemonCard>
             {Object.keys(item).length === 0 ? (
@@ -53,7 +61,11 @@ const PokemonCard = ({ item = {} }) => {
                     <StPokemonImg src={item.img_url} />
                     <StPokemonName>{item.korean_name}</StPokemonName>
                     <StPokemonId>No. {String(item.id).padStart(3, '0')}</StPokemonId>
-                    <StPokemonBtn>등록</StPokemonBtn>
+                    {item?.isRegistered ? (
+                        <StPokemonBtn onClick={() => removePokemon(item.id)}>삭제</StPokemonBtn>
+                    ) : (
+                        <StPokemonBtn onClick={addPokemon}>등록</StPokemonBtn>
+                    )}
                 </>
             )}
         </StPokemonCard>
