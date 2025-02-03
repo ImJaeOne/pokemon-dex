@@ -44,7 +44,6 @@ const StBackBtn = styled.button`
 
 const PokemonDetail = () => {
     const [searchParams] = useSearchParams();
-    console.log(searchParams);
     const query = Number(searchParams.get('id'));
 
     const pokemonDetail = MOCK_DATA.find((item) => item.id === query);
@@ -61,11 +60,6 @@ const PokemonDetail = () => {
             <StPokemonName>{pokemonDetail.korean_name}</StPokemonName>
             <StPokemonType>타입: {pokemonDetail.types?.join(', ')}</StPokemonType>
             <StPokemonDesc>{pokemonDetail.description}</StPokemonDesc>
-            {/* {myPokemon.some((item) => item.id === query) ? (
-                <StBtn onClick={removePokemon}>삭제</StBtn>
-            ) : (
-                <StBtn onClick={addPokemon}>등록</StBtn>
-            )} */}
             <StBackBtn onClick={handleBack}>뒤로 가기</StBackBtn>
         </StPokemonDetailContainer>
     );
