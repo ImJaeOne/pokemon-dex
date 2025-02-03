@@ -67,10 +67,12 @@ const PokemonDetail = ({ myPokemon, setMyPokemon }) => {
         setMyPokemon((prev) => {
             return [...prev, { ...pokemonDetail, isRegistered: true }];
         });
+        toast.info(`${pokemonDetail.korean_name} 등록 완료`);
     };
 
     const removePokemon = () => {
         setMyPokemon((prev) => [...prev].filter((item) => item.id !== pokemonDetail.id));
+        toast.info(`${pokemonDetail.korean_name} 삭제 완료`);
     };
 
     const handleBack = () => {

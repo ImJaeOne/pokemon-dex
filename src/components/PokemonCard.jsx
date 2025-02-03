@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import pokemonBall from '../assets/pokeball-13iwdk7Y.png';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const StPokemonCard = styled.div`
     display: flex;
@@ -58,11 +59,11 @@ const PokemonCard = ({ item = {}, myPokemon, setMyPokemon }) => {
     const addPokemon = (e, id) => {
         e.stopPropagation();
         if (myPokemon.some((item) => item.id === id)) {
-            alert('이미 등록되어 있는 포켓몬입니다.');
+            toast.error('이미 등록되어 있는 포켓몬입니다.');
             return;
         }
         if (myPokemon.length >= 6) {
-            alert('최대 6마리까지 등록할 수 있습니다.');
+            toast.error('최대 6마리까지 등록할 수 있습니다.');
             return;
         }
         setMyPokemon((prev) => {
@@ -78,11 +79,13 @@ const PokemonCard = ({ item = {}, myPokemon, setMyPokemon }) => {
             // }
             return [...prev, { ...item, isRegistered: true }];
         });
+        toast.info(`${item.korean_name} 등록 완료`);
     };
 
     const removePokemon = (e, id) => {
         e.stopPropagation();
         setMyPokemon((prev) => [...prev].filter((item) => item.id !== id));
+        toast.info(`${item.korean_name} 삭제 완료`);
     };
 
     return (

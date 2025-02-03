@@ -8,7 +8,6 @@ const Router = () => {
     const [myPokemon, setMyPokemon] = useState(() => {
         return JSON.parse(localStorage.getItem('pokemon')) || [];
     });
-    console.log(myPokemon)
 
     useEffect(() => {
         localStorage.setItem('pokemon', JSON.stringify(myPokemon));
