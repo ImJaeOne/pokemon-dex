@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import MOCK_DATA from '../mock-data';
 import styled from 'styled-components';
+import { toast } from 'react-toastify';
 
 const StPokemonDetailContainer = styled.div`
     margin: 0 auto;
