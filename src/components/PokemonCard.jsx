@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import pokemonBall from '../assets/pokeball-13iwdk7Y.png';
+import { useNavigate } from 'react-router-dom';
 
 const StPokemonCard = styled.div`
     display: flex;
@@ -44,30 +45,50 @@ const StPokemonBtn = styled.button`
     cursor: pointer;
 `;
 
-const PokemonCard = ({ item = {}, setMyPokemon }) => {
-    const addPokemon = (id) => {
+const PokemonCard = ({ item = {}, myPokemon, setMyPokemon }) => {
+    const navigate = useNavigate();
+
+    const handelGoDetail = () => {
+        if (Object.keys(item).length === 0) {
+            return;
+        }
+        navigate(`/pokemon-detail?id=${item.id}`);
+    };
+
+    const addPokemon = (e, id) => {
+        e.stopPropagation();
+      
+        if (myPokemon.some((item) => item.id === id)) {
+            alert('이미 등록되어 있는 포켓몬입니다.');
+            return ;
+        }
+        if (myPokemon.length >= 6) {
+            alert('최대 6마리까지 등록할 수 있습니다.');
+            return ;
+        }
         setMyPokemon((prev) => {
-            // 제일 처음 7개째 등록하려 하면 alert 2번 출력
-            if(prev.length === 6){
-                alert('최대 6마리까지 등록할 수 있습니다.')
-                return prev;
-            }
-            // 얘도 2번 출력... 왜...?
-            if(prev.some((item) => item.id === id)){
-                alert('이미 등록되어 있는 포켓몬입니다.')
-                return prev;
-            }
+            // // 얘도 2번 출력... 왜...?
+            // if (prev.some((item) => item.id === id)) {
+            //     alert('이미 등록되어 있는 포켓몬입니다.');
+            //     return prev;
+            // }
+            // // 제일 처음 7개째 등록하려 하면 alert 2번 출력
+            // if (prev.length >= 6) {
+            //     alert('최대 6마리까지 등록할 수 있습니다.');
+            //     return prev;
+            // }
             return [...prev, { ...item, isRegistered: true }];
         });
     };
 
-    const removePokemon = (id) => {
+    const removePokemon = (e, id) => {
+        e.stopPropagation();
         setMyPokemon((prev) => [...prev].filter((item) => item.id !== id));
     };
 
     return (
-        <StPokemonCard>
-            {Object.keys(item).length === 0 ? (
+        <StPokemonCard onClick={handelGoDetail}>
+            {Object.keys(item)?.length === 0 ? (
                 <StDashBoardImg src={pokemonBall} />
             ) : (
                 <>
@@ -75,9 +96,9 @@ const PokemonCard = ({ item = {}, setMyPokemon }) => {
                     <StPokemonName>{item.korean_name}</StPokemonName>
                     <StPokemonId>No. {String(item.id).padStart(3, '0')}</StPokemonId>
                     {item?.isRegistered ? (
-                        <StPokemonBtn onClick={() => removePokemon(item.id)}>삭제</StPokemonBtn>
+                        <StPokemonBtn onClick={(e) => removePokemon(e, item.id)}>삭제</StPokemonBtn>
                     ) : (
-                        <StPokemonBtn onClick={() => addPokemon(item.id)}>등록</StPokemonBtn>
+                        <StPokemonBtn onClick={(e) => addPokemon(e, item.id)}>등록</StPokemonBtn>
                     )}
                 </>
             )}
