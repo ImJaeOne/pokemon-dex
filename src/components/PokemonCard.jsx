@@ -8,6 +8,7 @@ const StPokemonCard = styled.div`
     align-items: center;
     gap: 20px;
     width: 120px;
+    height: 218px;
     padding: 20px;
     cursor: pointer;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
@@ -44,8 +45,20 @@ const StPokemonBtn = styled.button`
 `;
 
 const PokemonCard = ({ item = {}, setMyPokemon }) => {
-    const addPokemon = () => {
-        setMyPokemon((prev) => [...prev, { ...item, isRegistered: true }]);
+    const addPokemon = (id) => {
+        setMyPokemon((prev) => {
+            // 제일 처음 7개째 등록하려 하면 alert 2번 출력
+            if(prev.length === 6){
+                alert('최대 6마리까지 등록할 수 있습니다.')
+                return prev;
+            }
+            // 얘도 2번 출력... 왜...?
+            if(prev.some((item) => item.id === id)){
+                alert('이미 등록되어 있는 포켓몬입니다.')
+                return prev;
+            }
+            return [...prev, { ...item, isRegistered: true }];
+        });
     };
 
     const removePokemon = (id) => {
@@ -64,7 +77,7 @@ const PokemonCard = ({ item = {}, setMyPokemon }) => {
                     {item?.isRegistered ? (
                         <StPokemonBtn onClick={() => removePokemon(item.id)}>삭제</StPokemonBtn>
                     ) : (
-                        <StPokemonBtn onClick={addPokemon}>등록</StPokemonBtn>
+                        <StPokemonBtn onClick={() => addPokemon(item.id)}>등록</StPokemonBtn>
                     )}
                 </>
             )}
