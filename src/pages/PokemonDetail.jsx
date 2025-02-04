@@ -1,6 +1,9 @@
-import { useNavigate,useLocation,  useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import MOCK_DATA from '../mock-data';
 import styled from 'styled-components';
+import { toast } from 'react-toastify';
+import { useDispatch, useSelector } from 'react-redux';
+import { addPokemon, removePokemon } from '../redux/slices/pokemonSlice';
 
 const StPokemonDetailContainer = styled.div`
     margin: 0 auto;
@@ -34,7 +37,7 @@ const StPokemonDesc = styled.div`
     margin-bottom: 20px;
 `;
 
-const StBackBtn = styled.button`
+const StBtn = styled.button`
     border: none;
     border-radius: 10px;
     padding: 10px;
@@ -48,6 +51,31 @@ const PokemonDetail = () => {
 
     const pokemonDetail = MOCK_DATA.find((item) => item.id === query);
 
+    const myPokemon = useSelector((state) => state.myPokemon);
+    const isIncluded = myPokemon.some((pokemon) => pokemon.id === pokemonDetail.id);
+
+    const dispatch = useDispatch();
+
+    const handleAddBtn = (e, item) => {
+        e.stopPropagation();
+        if (myPokemon.some((pokemon) => pokemon.id === item.id)) {
+            toast.error('이미 등록되어 있는 포켓몬입니다.');
+            return;
+        }
+        if (myPokemon.length >= 6) {
+            toast.error('최대 6마리까지 등록할 수 있습니다.');
+            return;
+        }
+        dispatch(addPokemon({ pokemon: item }));
+        toast.info(`${item.korean_name} 등록 완료`);
+    };
+
+    const handleRemoveBtn = (e, item) => {
+        e.stopPropagation();
+        dispatch(removePokemon({ id: item.id }));
+        toast.info(`${item.korean_name} 삭제 완료`);
+    };
+
     const navigate = useNavigate();
 
     const handleBack = () => {
@@ -60,7 +88,13 @@ const PokemonDetail = () => {
             <StPokemonName>{pokemonDetail.korean_name}</StPokemonName>
             <StPokemonType>타입: {pokemonDetail.types?.join(', ')}</StPokemonType>
             <StPokemonDesc>{pokemonDetail.description}</StPokemonDesc>
-            <StBackBtn onClick={handleBack}>뒤로 가기</StBackBtn>
+
+            {isIncluded ? (
+                <StBtn onClick={(e) => handleRemoveBtn(e, pokemonDetail)}>삭제</StBtn>
+            ) : (
+                <StBtn onClick={(e) => handleAddBtn(e, pokemonDetail)}>등록</StBtn>
+            )}
+            <StBtn onClick={handleBack}>뒤로 가기</StBtn>
         </StPokemonDetailContainer>
     );
 };

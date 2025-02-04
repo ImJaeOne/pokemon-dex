@@ -2,6 +2,8 @@ import styled from 'styled-components';
 import pokemonBall from '../assets/pokeball-13iwdk7Y.png';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { useDispatch, useSelector } from 'react-redux';
+import { addPokemon, removePokemon } from '../redux/slices/pokemonSlice';
 
 const StPokemonCard = styled.div`
     display: flex;
@@ -46,8 +48,11 @@ const StPokemonBtn = styled.button`
     cursor: pointer;
 `;
 
-const PokemonCard = ({ item = {}, myPokemon, setMyPokemon }) => {
+const PokemonCard = ({ item = {} }) => {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    const myPokemon = useSelector((state) => state.myPokemon);
 
     const handelGoDetail = () => {
         if (Object.keys(item).length === 0) {
@@ -55,10 +60,10 @@ const PokemonCard = ({ item = {}, myPokemon, setMyPokemon }) => {
         }
         navigate(`/pokemon-detail?id=${item.id}`);
     };
+    const handleAddBtn = (e, item) => {
 
-    const addPokemon = (e, id) => {
         e.stopPropagation();
-        if (myPokemon.some((item) => item.id === id)) {
+        if (myPokemon.some((pokemon) => pokemon.id === item.id)) {
             toast.error('이미 등록되어 있는 포켓몬입니다.');
             return;
         }
@@ -66,15 +71,13 @@ const PokemonCard = ({ item = {}, myPokemon, setMyPokemon }) => {
             toast.error('최대 6마리까지 등록할 수 있습니다.');
             return;
         }
-        setMyPokemon((prev) => {
-            return [...prev, { ...item, isRegistered: true }];
-        });
+        dispatch(addPokemon({ pokemon: item }));
         toast.info(`${item.korean_name} 등록 완료`);
     };
 
-    const removePokemon = (e, id) => {
+    const handleRemoveBtn = (e, item) => {
         e.stopPropagation();
-        setMyPokemon((prev) => prev.filter((item) => item.id !== id));
+        dispatch(removePokemon({ id: item.id }));
         toast.info(`${item.korean_name} 삭제 완료`);
     };
 
@@ -88,9 +91,9 @@ const PokemonCard = ({ item = {}, myPokemon, setMyPokemon }) => {
                     <StPokemonName>{item.korean_name}</StPokemonName>
                     <StPokemonId>No. {String(item.id).padStart(3, '0')}</StPokemonId>
                     {item?.isRegistered ? (
-                        <StPokemonBtn onClick={(e) => removePokemon(e, item.id)}>삭제</StPokemonBtn>
+                        <StPokemonBtn onClick={(e) => handleRemoveBtn(e, item)}>삭제</StPokemonBtn>
                     ) : (
-                        <StPokemonBtn onClick={(e) => addPokemon(e, item.id)}>등록</StPokemonBtn>
+                        <StPokemonBtn onClick={(e) => handleAddBtn(e, item)}>등록</StPokemonBtn>
                     )}
                 </>
             )}
