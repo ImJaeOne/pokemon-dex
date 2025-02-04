@@ -53,8 +53,11 @@ const PokemonDetail = () => {
 
     const myPokemon = useSelector((state) => state.myPokemon);
     const isIncluded = myPokemon.some((pokemon) => pokemon.id === pokemonDetail.id);
-
     const dispatch = useDispatch();
+
+    // useEffect(() => {
+    //     localStorage.setItem('pokemon', JSON.stringify(myPokemon));
+    // }, [myPokemon]);
 
     const handleAddBtn = (e, item) => {
         e.stopPropagation();
