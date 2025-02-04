@@ -2,7 +2,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import MOCK_DATA from '../mock-data';
 import styled from 'styled-components';
 import { toast } from 'react-toastify';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addPokemon, removePokemon } from '../redux/slices/pokemonSlice';
 
 const StPokemonDetailContainer = styled.div`
@@ -58,6 +58,8 @@ const PokemonDetail = () => {
 
     const myPokemon = useSelector((state) => state.myPokemon);
     const isIncluded = myPokemon.some((pokemon) => pokemon.id === pokemonDetail.id);
+
+    const dispatch = useDispatch();
 
     const handleAddBtn = (e, item) => {
         e.stopPropagation();
