@@ -1,19 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Dashboard from '../components/Dashboard';
 import PokemonList from '../components/PokemonList';
+import { usePokemonContext } from '../context/PokemonContext';
 
 const Dex = () => {
-    const [myPokemon, setMyPokemon] = useState(() => {
-        return JSON.parse(localStorage.getItem('pokemon')) || [];
-    });
+    const { myPokemon } = usePokemonContext();
 
     useEffect(() => {
         localStorage.setItem('pokemon', JSON.stringify(myPokemon));
     }, [myPokemon]);
     return (
         <>
-            <Dashboard myPokemon={myPokemon} setMyPokemon={setMyPokemon} />
-            <PokemonList myPokemon={myPokemon} setMyPokemon={setMyPokemon} />
+            <Dashboard />
+            <PokemonList />
         </>
     );
 };

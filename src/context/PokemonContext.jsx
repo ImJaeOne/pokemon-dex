@@ -10,9 +10,9 @@ export const PokemonProvider = ({ children }) => {
         return JSON.parse(localStorage.getItem('pokemon')) || [];
     });
 
-    const addPokemon = (e, id) => {
+    const addPokemon = (e, item) => {
         e.stopPropagation();
-        if (myPokemon.some((item) => item.id === id)) {
+        if (myPokemon.some((pokemon) => pokemon.id === item.id)) {
             toast.error('이미 등록되어 있는 포켓몬입니다.');
             return;
         }
@@ -23,18 +23,18 @@ export const PokemonProvider = ({ children }) => {
         setMyPokemon((prev) => {
             return [...prev, { ...item, isRegistered: true }];
         });
-        toast.info(`등록 완료`);
+        toast.info(`${item.korean_name} 등록 완료`);
     };
 
-    const removePokemon = (e, id) => {
+    const removePokemon = (e, item) => {
         e.stopPropagation();
-        setMyPokemon((prev) => prev.filter((item) => item.id !== id));
-        toast.info(`삭제 완료`);
+        setMyPokemon((prev) => prev.filter((pokemon) => pokemon.id !== item.id));
+        toast.info(`${item.korean_name} 삭제 완료`);
     };
 
     return (
-        <PokemonContext value={{myPokemon, setMyPokemon, addPokemon, removePokemon}}>
+        <PokemonContext.Provider value={{myPokemon, setMyPokemon, addPokemon, removePokemon}}>
             {children}
-        </PokemonContext>
+        </PokemonContext.Provider>
     )
 };

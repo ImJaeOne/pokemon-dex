@@ -1,6 +1,7 @@
-import { useNavigate,useLocation,  useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import MOCK_DATA from '../mock-data';
 import styled from 'styled-components';
+import { usePokemonContext } from '../context/PokemonContext';
 
 const StPokemonDetailContainer = styled.div`
     margin: 0 auto;
@@ -34,7 +35,7 @@ const StPokemonDesc = styled.div`
     margin-bottom: 20px;
 `;
 
-const StBackBtn = styled.button`
+const StBtn = styled.button`
     border: none;
     border-radius: 10px;
     padding: 10px;
@@ -44,6 +45,8 @@ const StBackBtn = styled.button`
 
 const PokemonDetail = () => {
     const [searchParams] = useSearchParams();
+    const { myPokemon, addPokemon, removePokemon } = usePokemonContext();
+
     const query = Number(searchParams.get('id'));
 
     const pokemonDetail = MOCK_DATA.find((item) => item.id === query);
@@ -54,13 +57,21 @@ const PokemonDetail = () => {
         navigate(-1);
     };
 
+    const isIncluded = myPokemon.some((pokemon) => pokemon.id === pokemonDetail.id);
+
     return (
         <StPokemonDetailContainer>
             <StPokemonImg src={pokemonDetail.img_url} />
             <StPokemonName>{pokemonDetail.korean_name}</StPokemonName>
             <StPokemonType>타입: {pokemonDetail.types?.join(', ')}</StPokemonType>
             <StPokemonDesc>{pokemonDetail.description}</StPokemonDesc>
-            <StBackBtn onClick={handleBack}>뒤로 가기</StBackBtn>
+            {isIncluded ? (
+                <StBtn onClick={(e) => removePokemon(e, pokemonDetail)}>삭제</StBtn>
+            ) : (
+                <StBtn onClick={(e) => addPokemon(e, pokemonDetail)}>등록</StBtn>
+            )}
+
+            <StBtn onClick={handleBack}>뒤로 가기</StBtn>
         </StPokemonDetailContainer>
     );
 };

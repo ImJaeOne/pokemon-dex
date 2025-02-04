@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import PokemonCard from './PokemonCard';
-import pokemonLogo from'../assets/pokemon-logo-RN0wntMB.png'
+import pokemonLogo from '../assets/pokemon-logo-RN0wntMB.png';
+import { usePokemonContext } from '../context/PokemonContext';
 
 const StDashboard = styled.div`
     display: flex;
@@ -26,14 +27,15 @@ const StDashBoardList = styled.div`
 
 const fixedPokemonList = Array.from({ length: 6 }, () => ({}));
 
-const Dashboard = ({ myPokemon,setMyPokemon }) => {
+const Dashboard = () => {
+    const {myPokemon} = usePokemonContext();
     return (
         <StDashboard>
-            <StDashBoardTitle src={pokemonLogo}/>
+            <StDashBoardTitle src={pokemonLogo} />
             <StDashBoardList>
                 {fixedPokemonList.map((_, idx) => {
-                    const item = myPokemon && myPokemon[idx] || {};
-                    return <PokemonCard key={`dex${idx}`} item={item} myPokemon={myPokemon} setMyPokemon={setMyPokemon}/>;
+                    const item = (myPokemon && myPokemon[idx]) || {};
+                    return <PokemonCard key={`dex${idx}`} item={item} />;
                 })}
             </StDashBoardList>
         </StDashboard>
