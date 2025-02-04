@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import PokemonCard from './PokemonCard';
-import pokemonLogo from'../assets/pokemon-logo-RN0wntMB.png'
+import pokemonLogo from '../assets/pokemon-logo-RN0wntMB.png';
 import { useSelector } from 'react-redux';
 
 const StDashboard = styled.div`
@@ -22,6 +22,7 @@ const StDashBoardTitle = styled.img`
 
 const StDashBoardList = styled.div`
     display: flex;
+    flex-wrap: wrap;
     gap: 10px;
 `;
 
@@ -31,10 +32,10 @@ const Dashboard = () => {
     const myPokemon = useSelector((state) => state.myPokemon);
     return (
         <StDashboard>
-            <StDashBoardTitle src={pokemonLogo}/>
+            <StDashBoardTitle src={pokemonLogo} />
             <StDashBoardList>
                 {fixedPokemonList.map((_, idx) => {
-                    const item = myPokemon && myPokemon[idx] || {};
+                    const item = (myPokemon && myPokemon[idx]) || {};
                     return <PokemonCard key={`dex${idx}`} item={item} />;
                 })}
             </StDashBoardList>

@@ -7,7 +7,7 @@ const pokemonSlice = createSlice({
     initialState,
     reducers: {
         addPokemon: (state, action) => {
-            return [...state, { ...action.payload.pokemon, isRegistered: true }];
+            return [...state, action.payload.pokemon];
         },
         removePokemon: (state, action) => {
             return state.filter((myPokemon) => myPokemon.id !== action.payload.id);

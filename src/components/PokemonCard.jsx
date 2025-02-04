@@ -81,6 +81,8 @@ const PokemonCard = ({ item = {} }) => {
         toast.info(`${item.korean_name} 삭제 완료`);
     };
 
+    const isSelected = myPokemon.some((pokemon) => pokemon.id === item.id);
+
     return (
         <StPokemonCard onClick={handelGoDetail}>
             {Object.keys(item)?.length === 0 ? (
@@ -90,7 +92,7 @@ const PokemonCard = ({ item = {} }) => {
                     <StPokemonImg src={item.img_url} />
                     <StPokemonName>{item.korean_name}</StPokemonName>
                     <StPokemonId>No. {String(item.id).padStart(3, '0')}</StPokemonId>
-                    {item?.isRegistered ? (
+                    {isSelected ? (
                         <StPokemonBtn onClick={(e) => handleRemoveBtn(e, item)}>삭제</StPokemonBtn>
                     ) : (
                         <StPokemonBtn onClick={(e) => handleAddBtn(e, item)}>등록</StPokemonBtn>
