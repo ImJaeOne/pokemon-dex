@@ -2,7 +2,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import MOCK_DATA from '../mock-data';
 import styled from 'styled-components';
 import { toast } from 'react-toastify';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { addPokemon, removePokemon } from '../redux/slices/pokemonSlice';
 
 const StPokemonDetailContainer = styled.div`
@@ -43,6 +43,11 @@ const StBtn = styled.button`
     padding: 10px;
     font-size: 15px;
     cursor: pointer;
+    background-color: ${({ $props }) =>
+        $props === 'remove' ? '#FF6B6B' :
+        $props === 'add' ? '#6BCB77' :
+        '#D9D9D9'};
+    color: ${({ $props }) => ($props ? 'white' : 'black')};
 `;
 
 const PokemonDetail = () => {
@@ -53,11 +58,6 @@ const PokemonDetail = () => {
 
     const myPokemon = useSelector((state) => state.myPokemon);
     const isIncluded = myPokemon.some((pokemon) => pokemon.id === pokemonDetail.id);
-    const dispatch = useDispatch();
-
-    // useEffect(() => {
-    //     localStorage.setItem('pokemon', JSON.stringify(myPokemon));
-    // }, [myPokemon]);
 
     const handleAddBtn = (e, item) => {
         e.stopPropagation();
@@ -93,9 +93,13 @@ const PokemonDetail = () => {
             <StPokemonDesc>{pokemonDetail.description}</StPokemonDesc>
 
             {isIncluded ? (
-                <StBtn onClick={(e) => handleRemoveBtn(e, pokemonDetail)}>삭제</StBtn>
+                <StBtn $props={'remove'} onClick={(e) => handleRemoveBtn(e, pokemonDetail)}>
+                    삭제
+                </StBtn>
             ) : (
-                <StBtn onClick={(e) => handleAddBtn(e, pokemonDetail)}>등록</StBtn>
+                <StBtn $props={'add'} onClick={(e) => handleAddBtn(e, pokemonDetail)}>
+                    등록
+                </StBtn>
             )}
             <StBtn onClick={handleBack}>뒤로 가기</StBtn>
         </StPokemonDetailContainer>

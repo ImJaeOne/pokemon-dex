@@ -46,6 +46,8 @@ const StPokemonBtn = styled.button`
     border: none;
     padding: 5px 10px;
     cursor: pointer;
+    background-color: ${({ $props }) => ($props === 'remove' ? '#FF6B6B' : '#6BCB77')};
+    color: white;
 `;
 
 const PokemonCard = ({ item = {} }) => {
@@ -60,8 +62,8 @@ const PokemonCard = ({ item = {} }) => {
         }
         navigate(`/pokemon-detail?id=${item.id}`);
     };
-    const handleAddBtn = (e, item) => {
 
+    const handleAddBtn = (e, item) => {
         e.stopPropagation();
         if (myPokemon.some((pokemon) => pokemon.id === item.id)) {
             toast.error('이미 등록되어 있는 포켓몬입니다.');
@@ -93,9 +95,9 @@ const PokemonCard = ({ item = {} }) => {
                     <StPokemonName>{item.korean_name}</StPokemonName>
                     <StPokemonId>No. {String(item.id).padStart(3, '0')}</StPokemonId>
                     {isSelected ? (
-                        <StPokemonBtn onClick={(e) => handleRemoveBtn(e, item)}>삭제</StPokemonBtn>
+                        <StPokemonBtn $props={'remove'} onClick={(e) => handleRemoveBtn(e, item)}>삭제</StPokemonBtn>
                     ) : (
-                        <StPokemonBtn onClick={(e) => handleAddBtn(e, item)}>등록</StPokemonBtn>
+                        <StPokemonBtn $props={'add'} onClick={(e) => handleAddBtn(e, item)}>등록</StPokemonBtn>
                     )}
                 </>
             )}
