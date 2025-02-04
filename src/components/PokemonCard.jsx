@@ -95,9 +95,13 @@ const PokemonCard = ({ item = {} }) => {
                     <StPokemonName>{item.korean_name}</StPokemonName>
                     <StPokemonId>No. {String(item.id).padStart(3, '0')}</StPokemonId>
                     {isSelected ? (
-                        <StPokemonBtn $props={'remove'} onClick={(e) => handleRemoveBtn(e, item)}>삭제</StPokemonBtn>
+                        <StPokemonBtn $props={'remove'} onClick={(e) => handleRemoveBtn(e, item)}>
+                            삭제
+                        </StPokemonBtn>
                     ) : (
-                        <StPokemonBtn $props={'add'} onClick={(e) => handleAddBtn(e, item)}>등록</StPokemonBtn>
+                        <StPokemonBtn $props={'add'} onClick={(e) => handleAddBtn(e, item)}>
+                            등록
+                        </StPokemonBtn>
                     )}
                 </>
             )}

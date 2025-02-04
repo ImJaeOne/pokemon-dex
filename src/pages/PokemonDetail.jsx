@@ -20,10 +20,24 @@ const StPokemonImg = styled.img`
     height: 250px;
 `;
 
+const StPokemonHeader = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 400px;
+`;
+
+const StPokemonNumber = styled.div`
+    font-size: 18px;
+    color: rgba(0, 0, 0, 0.5); /* 흐린 효과 */
+    font-weight: bold;
+    margin-right: 10px;
+`;
+
 const StPokemonName = styled.div`
     font-weight: bold;
-    font-size: 40px;
-    margin-bottom: 20px;
+    font-size: 30px;
 `;
 
 const StPokemonType = styled.div`
@@ -43,11 +57,16 @@ const StBtn = styled.button`
     padding: 10px;
     font-size: 15px;
     cursor: pointer;
-    background-color: ${({ $props }) =>
-        $props === 'remove' ? '#FF6B6B' :
-        $props === 'add' ? '#6BCB77' :
-        '#D9D9D9'};
+    background-color: ${({ $props }) => ($props === 'remove' ? '#FF6B6B' : $props === 'add' ? '#6BCB77' : '#D9D9D9')};
     color: ${({ $props }) => ($props ? 'white' : 'black')};
+`;
+
+const StNavigation = styled.div`
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 400px;
+    margin-top: 20px;
 `;
 
 const PokemonDetail = () => {
@@ -84,13 +103,26 @@ const PokemonDetail = () => {
     const navigate = useNavigate();
 
     const handleBack = () => {
-        navigate(-1);
+        navigate('/dex');
+    };
+
+    const handlePrev = () => {
+        const prevId = query > 1 ? query - 1 : MOCK_DATA.length;
+        navigate(`?id=${prevId}`);
+    };
+
+    const handleNext = () => {
+        const nextId = query < MOCK_DATA.length ? query + 1 : 1;
+        navigate(`?id=${nextId}`);
     };
 
     return (
         <StPokemonDetailContainer>
+            <StPokemonHeader>
+                <StPokemonNumber>No. {String(pokemonDetail.id).padStart(3, '0')}</StPokemonNumber>
+                <StPokemonName>{pokemonDetail.korean_name}</StPokemonName>
+            </StPokemonHeader>
             <StPokemonImg src={pokemonDetail.img_url} />
-            <StPokemonName>{pokemonDetail.korean_name}</StPokemonName>
             <StPokemonType>타입: {pokemonDetail.types?.join(', ')}</StPokemonType>
             <StPokemonDesc>{pokemonDetail.description}</StPokemonDesc>
 
@@ -103,7 +135,12 @@ const PokemonDetail = () => {
                     등록
                 </StBtn>
             )}
-            <StBtn onClick={handleBack}>뒤로 가기</StBtn>
+
+            <StNavigation>
+                <StBtn onClick={handlePrev}>◀</StBtn>
+                <StBtn onClick={handleBack}>도감으로 돌아가기</StBtn>
+                <StBtn onClick={handleNext}>▶</StBtn>
+            </StNavigation>
         </StPokemonDetailContainer>
     );
 };
