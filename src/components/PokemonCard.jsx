@@ -65,10 +65,12 @@ const PokemonCard = ({ item = {} }) => {
 
     const handleAddBtn = (e, item) => {
         e.stopPropagation();
-        if (myPokemon.some((pokemon) => pokemon.id === item.id)) {
-            toast.error('이미 등록되어 있는 포켓몬입니다.');
-            return;
-        }
+        // isSelected로 관리할 경우 필요 없음
+        // 내 덱에 등록되어 있을 경우 삭제 기능을 갖춘 버튼으로 조건부 렌더링
+        // if (myPokemon.some((pokemon) => pokemon.id === item.id)) {
+        //     toast.error('이미 등록되어 있는 포켓몬입니다.');
+        //     return;
+        // }
         if (myPokemon.length >= 6) {
             toast.error('최대 6마리까지 등록할 수 있습니다.');
             return;
