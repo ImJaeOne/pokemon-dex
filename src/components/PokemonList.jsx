@@ -12,10 +12,10 @@ const StPokemonList = styled.div`
 `;
 
 const PokemonList = () => {
-    const { handelClickPokemonCard, isSelected } = usePokemonActions();
+    const { handleClickPokemonCard, isSelected } = usePokemonActions();
 
     return (
-        <StPokemonList onClick={handelClickPokemonCard}>
+        <StPokemonList onClick={handleClickPokemonCard}>
             {MOCK_DATA.map((item) => (
                 <PokemonCard key={item.id} item={item} isSelected={isSelected(item)} />
             ))}

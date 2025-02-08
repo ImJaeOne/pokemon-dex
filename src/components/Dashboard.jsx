@@ -33,11 +33,11 @@ const StDashBoardList = styled.div`
 const fixedPokemonList = Array.from({ length: 6 }, () => ({}));
 
 const Dashboard = () => {
-    const {myPokemon, handelClickPokemonCard, isSelected} = usePokemonActions();
+    const {myPokemon, handleClickPokemonCard, isSelected} = usePokemonActions();
     return (
         <StDashboard>
             <StDashBoardTitle src={pokemonLogo} />
-            <StDashBoardList onClick={handelClickPokemonCard}>
+            <StDashBoardList onClick={handleClickPokemonCard}>
                 {fixedPokemonList.map((_, idx) => {
                     const item = (myPokemon && myPokemon[idx]) || {};
                     return <PokemonCard key={`dex${idx}`} item={item} isSelected={isSelected} />;

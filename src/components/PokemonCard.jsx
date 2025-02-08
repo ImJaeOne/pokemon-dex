@@ -42,9 +42,7 @@ const StPokemonId = styled.div`
     color: #bbbbbb;
 `;
 
-const StPokemonBtn = styled.button.withConfig({
-    shouldForwardProp: (prop) => prop !== 'action-type', // action-type을 DOM에 전달하지 않도록 필터링
-})`
+const StPokemonBtn = styled.button`
     border-radius: 10px;
     border: none;
     padding: 5px 10px;

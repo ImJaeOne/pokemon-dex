@@ -9,14 +9,14 @@ const usePokemonActions = () => {
     const navigate = useNavigate();
     const myPokemon = useSelector((state) => state.myPokemon);
 
-    const handelClickPokemonCard = (e) => {
-        const itemId = e.target.closest('[data-id]').getAttribute('data-id');
+    const handleClickPokemonCard = (e) => {
+        const itemId = e.target.closest('[data-id]')?.getAttribute('data-id');
         const item = MOCK_DATA.find((pokemon) => pokemon.id === Number(itemId));
-        
-        if (!item) return; 
+
+        if (!item) return;
 
         const actionType = e.target.getAttribute('data-type');
-        
+
         if (actionType === 'add') {
             if (myPokemon.length >= 6) {
                 toast.error('최대 6마리까지 등록할 수 있습니다.');
@@ -34,7 +34,7 @@ const usePokemonActions = () => {
 
     const isSelected = (item) => myPokemon.some((pokemon) => pokemon.id === item.id);
 
-    return {myPokemon, handelClickPokemonCard, isSelected };
+    return { myPokemon, handleClickPokemonCard, isSelected };
 };
 
 export default usePokemonActions;
