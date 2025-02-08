@@ -1,7 +1,11 @@
 import styled from 'styled-components';
 import PokemonCard from './PokemonCard';
 import pokemonLogo from '../assets/pokemon-logo-RN0wntMB.png';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import MOCK_DATA from '../mock-data';
+import { addPokemon, removePokemon } from '../redux/slices/pokemonSlice';
+import { toast } from 'react-toastify';
+import usePokemonActions from '../hooks/usePokemonActions';
 
 const StDashboard = styled.div`
     display: flex;
@@ -29,14 +33,14 @@ const StDashBoardList = styled.div`
 const fixedPokemonList = Array.from({ length: 6 }, () => ({}));
 
 const Dashboard = () => {
-    const myPokemon = useSelector((state) => state.myPokemon);
+    const {myPokemon, handelClickPokemonCard, isSelected} = usePokemonActions();
     return (
         <StDashboard>
             <StDashBoardTitle src={pokemonLogo} />
-            <StDashBoardList>
+            <StDashBoardList onClick={handelClickPokemonCard}>
                 {fixedPokemonList.map((_, idx) => {
                     const item = (myPokemon && myPokemon[idx]) || {};
-                    return <PokemonCard key={`dex${idx}`} item={item} />;
+                    return <PokemonCard key={`dex${idx}`} item={item} isSelected={isSelected} />;
                 })}
             </StDashBoardList>
         </StDashboard>

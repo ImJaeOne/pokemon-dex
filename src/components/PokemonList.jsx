@@ -1,6 +1,7 @@
 import PokemonCard from './PokemonCard';
 import MOCK_DATA from '../mock-data';
 import styled from 'styled-components';
+import usePokemonActions from '../hooks/usePokemonActions';
 
 const StPokemonList = styled.div`
     display: flex;
@@ -11,10 +12,12 @@ const StPokemonList = styled.div`
 `;
 
 const PokemonList = () => {
+    const { handelClickPokemonCard, isSelected } = usePokemonActions();
+
     return (
-        <StPokemonList>
+        <StPokemonList onClick={handelClickPokemonCard}>
             {MOCK_DATA.map((item) => (
-                <PokemonCard key={item.id} item={item} />
+                <PokemonCard key={item.id} item={item} isSelected={isSelected(item)} />
             ))}
         </StPokemonList>
     );

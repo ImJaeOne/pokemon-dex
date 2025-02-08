@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 import { addPokemon, removePokemon } from '../redux/slices/pokemonSlice';
+import { memo } from 'react';
 
 const StPokemonCard = styled.div`
     display: flex;
@@ -41,54 +42,27 @@ const StPokemonId = styled.div`
     color: #bbbbbb;
 `;
 
-const StPokemonBtn = styled.button`
+const StPokemonBtn = styled.button.withConfig({
+    shouldForwardProp: (prop) => prop !== 'action-type', // action-type을 DOM에 전달하지 않도록 필터링
+})`
     border-radius: 10px;
     border: none;
     padding: 5px 10px;
     cursor: pointer;
-    background-color: ${({ $props }) => ($props === 'remove' ? '#FF6B6B' : '#6BCB77')};
     color: white;
 `;
 
-const PokemonCard = ({ item = {} }) => {
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
+const StAddBtn = styled(StPokemonBtn)`
+    background-color: #6bcb77;
+`;
 
-    const myPokemon = useSelector((state) => state.myPokemon);
+const StReomveBtn = styled(StPokemonBtn)`
+    background-color: #ff6b6b;
+`;
 
-    const handelGoDetail = () => {
-        if (Object.keys(item).length === 0) {
-            return;
-        }
-        navigate(`/pokemon-detail?id=${item.id}`);
-    };
-
-    const handleAddBtn = (e, item) => {
-        e.stopPropagation();
-        // isSelected로 관리할 경우 필요 없음
-        // 내 덱에 등록되어 있을 경우 삭제 기능을 갖춘 버튼으로 조건부 렌더링
-        // if (myPokemon.some((pokemon) => pokemon.id === item.id)) {
-        //     toast.error('이미 등록되어 있는 포켓몬입니다.');
-        //     return;
-        // }
-        if (myPokemon.length >= 6) {
-            toast.error('최대 6마리까지 등록할 수 있습니다.');
-            return;
-        }
-        dispatch(addPokemon({ pokemon: item }));
-        toast.info(`${item.korean_name} 등록 완료`);
-    };
-
-    const handleRemoveBtn = (e, item) => {
-        e.stopPropagation();
-        dispatch(removePokemon({ id: item.id }));
-        toast.info(`${item.korean_name} 삭제 완료`);
-    };
-
-    const isSelected = myPokemon.some((pokemon) => pokemon.id === item.id);
-
+const PokemonCard = ({ item = {}, isSelected }) => {
     return (
-        <StPokemonCard onClick={handelGoDetail}>
+        <StPokemonCard data-id={item.id}>
             {Object.keys(item)?.length === 0 ? (
                 <StDashBoardImg src={pokemonBall} />
             ) : (
@@ -97,13 +71,9 @@ const PokemonCard = ({ item = {} }) => {
                     <StPokemonName>{item.korean_name}</StPokemonName>
                     <StPokemonId>No. {String(item.id).padStart(3, '0')}</StPokemonId>
                     {isSelected ? (
-                        <StPokemonBtn $props={'remove'} onClick={(e) => handleRemoveBtn(e, item)}>
-                            삭제
-                        </StPokemonBtn>
+                        <StReomveBtn data-type="remove">삭제</StReomveBtn>
                     ) : (
-                        <StPokemonBtn $props={'add'} onClick={(e) => handleAddBtn(e, item)}>
-                            등록
-                        </StPokemonBtn>
+                        <StAddBtn data-type="add">등록</StAddBtn>
                     )}
                 </>
             )}
@@ -111,4 +81,4 @@ const PokemonCard = ({ item = {} }) => {
     );
 };
 
-export default PokemonCard;
+export default memo(PokemonCard);
