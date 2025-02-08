@@ -75,7 +75,7 @@ const usePokemonActions = () => {
   [왜 새로고침하면 사라지는데?](https://dlawi0108.tistory.com/55)
 
 - 카드 컴포넌트 UI에 변경이 없음에도 리렌더링 되는 문제
-  [상위 컴포넌트로의 이벤트 위임을 통한 리렌더링 최적화] (https://dlawi0108.tistory.com/59)
+  [상위 컴포넌트로의 이벤트 위임을 통한 리렌더링 최적화](https://dlawi0108.tistory.com/59)
   
 
 ## 🚀 배포 및 실행 
