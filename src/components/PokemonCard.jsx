@@ -1,9 +1,5 @@
 import styled from 'styled-components';
 import pokemonBall from '../assets/pokeball-13iwdk7Y.png';
-import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import { useDispatch, useSelector } from 'react-redux';
-import { addPokemon, removePokemon } from '../redux/slices/pokemonSlice';
 import { memo } from 'react';
 
 const StPokemonCard = styled.div`

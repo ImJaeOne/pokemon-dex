@@ -1,10 +1,6 @@
 import styled from 'styled-components';
 import PokemonCard from './PokemonCard';
 import pokemonLogo from '../assets/pokemon-logo-RN0wntMB.png';
-import { useDispatch, useSelector } from 'react-redux';
-import MOCK_DATA from '../mock-data';
-import { addPokemon, removePokemon } from '../redux/slices/pokemonSlice';
-import { toast } from 'react-toastify';
 import usePokemonActions from '../hooks/usePokemonActions';
 
 const StDashboard = styled.div`
