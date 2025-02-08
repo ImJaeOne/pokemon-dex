@@ -16,17 +16,51 @@
 
 #### 모든 CRUD 기능은 로컬 스토리지(localStorage)와 연동되어, 페이지를 새로고침해도 데이터가 유지됩니다.
 
-```javascript
-const myPokemon = useSelector((state) => state.myPokemon);
-
-useEffect(() => {
-    localStorage.setItem('pokemon', JSON.stringify(myPokemon));
-}, [myPokemon]);
-```
-
 - 포켓몬 목록 보기: 나만의 포켓몬 Dex에 등록된 포켓몬을 목록으로 확인할 수 있습니다.
 - 포켓몬 상세 보기: 각 포켓몬을 클릭하면 상세 정보(타입, 설명, 이미지 등)를 확인할 수 있습니다.
 - 포켓몬 등록/삭제: 포켓몬을 등록하거나 삭제하여 나만의 덱을 만들 수 있습니다.
+
+## 🧩 custom Hook : usePokemonDex 
+이 프로젝트에서는 내 포켓몬 덱을 관리하기 위해 usePokemonActions라는 커스텀 훅을 사용합니다. 이 훅은 내 포켓몬 덱에 특정 포켓몬 추가, 삭제 / 내 포켓몬 덱의 해당 포켓몬 유무 로직을 처리합니다.
+
+```javascript
+const usePokemonActions = () => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const myPokemon = useSelector((state) => state.myPokemon);
+
+    const handleClickPokemonCard = (e) => {
+        const itemId = e.target.closest('[data-id]')?.getAttribute('data-id');
+        const item = MOCK_DATA.find((pokemon) => pokemon.id === Number(itemId));
+
+        if (!item) return;
+
+        const actionType = e.target.getAttribute('data-type');
+
+        if (actionType === 'add') {
+            if (myPokemon.length >= 6) {
+                toast.error('최대 6마리까지 등록할 수 있습니다.');
+                return;
+            }
+            dispatch(addPokemon({ pokemon: item }));
+            toast.info(`${item.korean_name} 등록 완료`);
+        } else if (actionType === 'remove') {
+            dispatch(removePokemon({ id: item.id }));
+            toast.info(`${item.korean_name} 삭제 완료`);
+        } else {
+            navigate(`/pokemon-detail?id=${item.id}`);
+        }
+    };
+
+    const isSelected = (item) => myPokemon.some((pokemon) => pokemon.id === item.id);
+
+    return { myPokemon, handleClickPokemonCard, isSelected };
+};
+```
+
+### usePokemonDex 훅 생성 이유
+- 재사용성: 관련 로직을 상위 컴포넌트로의 이벤트 위임으로 인해 해당 로직을 Dashboard와 List에서 사용하게 되었습니다. 또한 Deatail에서도 사용합니다. 카드 컴포넌트의 동작 로직과 포켓몬 덱의 유무 로직을 각각에 맞게 재사용할 수 있도록 커스텀 훅으로 분리한 것이었습니다. 이렇게 함으로써 중복 코드를 줄이고, 카드 컴포넌트에서의 동작을 필요한 곳에서 자유롭게 사용할 수 있게 되었습니다.
+- 비즈니스 로직 분리: 카드의 클릭 이벤트를 처리하는 로직을 커스텀 훅으로 분리함으로써, PokemomList 컴포넌트 자체는 UI와 관련된 부분만 다루고, 비즈니스 로직(예: 카드 클릭 시 add)은 커스텀 훅으로 관리됩니다. 
 
 
 ## 📝 문제 해결
@@ -36,6 +70,9 @@ useEffect(() => {
 
 - 새로고침하면 등록/삭제하기 이전 상태로 돌아가는 문제
   [왜 새로고침하면 사라지는데?](https://dlawi0108.tistory.com/55)
+
+- 카드 컴포넌트 UI에 변경이 없음에도 리렌더링 되는 문제
+  [상위 컴포넌트로의 이벤트 위임을 통한 리렌더링 최적화] (https://dlawi0108.tistory.com/59)
   
 
 ## 🚀 배포 및 실행 
