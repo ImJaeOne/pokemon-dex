@@ -68,17 +68,18 @@ const usePokemonActions = () => {
 
 ## 📝 문제 해결
 
-- vercel 환경에서 새로고침을 하면 404 error가 뜨는 문제
-  [Vercel에서 새로 고침하면 404 Not Found..?](https://dlawi0108.tistory.com/54)
+- vercel 환경에서 새로고침을 하면 404 error가 뜨는 문제  
+  #### [Vercel에서 새로 고침하면 404 Not Found..?](https://dlawi0108.tistory.com/54)
 
-- 새로고침하면 등록/삭제하기 이전 상태로 돌아가는 문제
-  [왜 새로고침하면 사라지는데?](https://dlawi0108.tistory.com/55)
+- 새로고침하면 등록/삭제하기 이전 상태로 돌아가는 문제  
+  #### [왜 새로고침하면 사라지는데?](https://dlawi0108.tistory.com/55)
 
-- 카드 컴포넌트 UI에 변경이 없음에도 리렌더링 되는 문제
-  [상위 컴포넌트로의 이벤트 위임을 통한 리렌더링 최적화](https://dlawi0108.tistory.com/59)
+- 카드 컴포넌트 UI에 변경이 없음에도 리렌더링 되는 문제  
+  #### [상위 컴포넌트로의 이벤트 위임을 통한 리렌더링 최적화](https://dlawi0108.tistory.com/59)
 
-- detail 페이지 내에서의 페이지 이동
-  [배열 길이를 넘어갈 때 순환 처리하는 방법 (% 연산자 활용)](https://dlawi0108.tistory.com/60)
+- detail 페이지 내에서의 페이지 이동  
+  #### [배열 길이를 넘어갈 때 순환 처리하는 방법 (% 연산자 활용)](https://dlawi0108.tistory.com/60)
+
 
 ## 🚀 배포 및 실행 
 [Vercel](https://pokemon-dex-nu.vercel.app/)
@@ -90,4 +91,7 @@ const usePokemonActions = () => {
 물론 Redux를 사용하면 상태를 관리할 때 일관성이 있고 addPokemon, removePokemon 액션에 따라 상태를 변경하는 구조가 명확하긴 하지만, 작은 규모의 프로젝트에서는 그 복잡성보다 prop drilling이 더 효율적으로 느껴졌습니다.
 
 또한 후반 작업으로 카드 렌더링 최적화를 진행하였는데 최적화를 진행하며 카드 컴포넌트에서 이뤄져야 할 로직을 상위 컴포넌트로 올리며 가독성이 떨어지는 문제점이 생겼습니다. 최적화와 가독성 사이에서 적당히 타협하며 코드를 구현해야겠다고 생각했습니다.
+
+
+
 
