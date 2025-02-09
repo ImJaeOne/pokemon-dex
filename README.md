@@ -76,7 +76,9 @@ const usePokemonActions = () => {
 
 - 카드 컴포넌트 UI에 변경이 없음에도 리렌더링 되는 문제
   [상위 컴포넌트로의 이벤트 위임을 통한 리렌더링 최적화](https://dlawi0108.tistory.com/59)
-  
+
+- detail 페이지 내에서의 페이지 이동
+  [배열 길이를 넘어갈 때 순환 처리하는 방법 (% 연산자 활용)](https://dlawi0108.tistory.com/60)
 
 ## 🚀 배포 및 실행 
 [Vercel](https://pokemon-dex-nu.vercel.app/)
