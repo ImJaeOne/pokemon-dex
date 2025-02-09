@@ -96,14 +96,15 @@ const PokemonDetail = () => {
     };
 
     const handlePrev = () => {
-        const prevId = query > 1 ? query - 1 : MOCK_DATA.length;
+        const prevId = (query - 1 + MOCK_DATA.length - 1) % MOCK_DATA.length + 1;
         navigate(`?id=${prevId}`);
     };
-
+    
     const handleNext = () => {
-        const nextId = query < MOCK_DATA.length ? query + 1 : 1;
+        const nextId = query % MOCK_DATA.length + 1;
         navigate(`?id=${nextId}`);
     };
+    
 
     return (
         <StPokemonDetailContainer onClick={handleClickPokemonCard}>
