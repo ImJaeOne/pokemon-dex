@@ -55,6 +55,7 @@ const StReomveBtn = styled(StPokemonBtn)`
 `;
 
 const PokemonCard = ({ item = {}, isSelected }) => {
+    
     return (
         <StPokemonCard data-id={item.id}>
             {Object.keys(item)?.length === 0 ? (
